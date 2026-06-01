@@ -77,7 +77,7 @@ export default function FamilyTree({ className }: FamilyTreeProps) {
 
     // Render D3 Collapsible Tree
     useEffect(() => {
-        if (!treeData || !svgRef.current || !containerRef.current) return;
+        if (!treeData || (Array.isArray(treeData) && treeData.length === 0) || !treeData.id || !svgRef.current || !containerRef.current) return;
 
         const containerRect = containerRef.current.getBoundingClientRect();
         const width = containerRect.width;
@@ -545,7 +545,7 @@ export default function FamilyTree({ className }: FamilyTreeProps) {
             )}
 
             {/* Empty State */}
-            {!loading && !treeData && (
+            {!loading && (!treeData || (Array.isArray(treeData) && treeData.length === 0) || !treeData.id) && (
                 <div className="absolute inset-0 flex items-center justify-center z-20">
                     <div className="text-center">
                         <div className="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center" style={{ background: `rgba(${parseInt(themeColor.slice(1,3),16)}, ${parseInt(themeColor.slice(3,5),16)}, ${parseInt(themeColor.slice(5,7),16)}, 0.1)` }}>
